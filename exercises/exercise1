@@ -1,0 +1,48 @@
+irb(main):001:0> brew = Brewery.create name: "BrewDog", year:2007
+   (0.1ms)  begin transaction
+  SQL (0.4ms)  INSERT INTO "breweries" ("name", "year", "created_at", "updated_at") VALUES (?, ?, ?, ?)  [["name", "BrewDog"], ["year", 2007], ["created_at", "2016-01-26 13:02:11.417134"], ["updated_at", "2016-01-26 13:02:11.417134"]]
+   (46.3ms)  commit transaction
+=> #<Brewery id: 5, name: "BrewDog", year: 2007, created_at: "2016-01-26 13:02:11", updated_at: "2016-01-26 13:02:11">
+irb(main):002:0> brew.beers.create name:"Punk IPA", style:"IPA"
+   (0.0ms)  begin transaction
+  SQL (0.3ms)  INSERT INTO "beers" ("name", "style", "brewery_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)  [["name", "Punk IPA"], ["style", "IPA"], ["brewery_id", 5], ["created_at", "2016-01-26 13:02:53.453411"], ["updated_at", "2016-01-26 13:02:53.453411"]]
+   (39.1ms)  commit transaction
+=> #<Beer id: 14, name: "Punk IPA", style: "IPA", brewery_id: 5, created_at: "2016-01-26 13:02:53", updated_at: "2016-01-26 13:02:53">
+irb(main):003:0> brew.beers.create name:"Nanny State", style:"lowalcohol"
+   (0.1ms)  begin transaction
+  SQL (0.2ms)  INSERT INTO "beers" ("name", "style", "brewery_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)  [["name", "Nanny State"], ["style", "lowalcohol"], ["brewery_id", 5], ["created_at", "2016-01-26 13:03:37.264772"], ["updated_at", "2016-01-26 13:03:37.264772"]]
+   (40.0ms)  commit transaction
+=> #<Beer id: 15, name: "Nanny State", style: "lowalcohol", brewery_id: 5, created_at: "2016-01-26 13:03:37", updated_at: "2016-01-26 13:03:37">
+irb(main):004:0> brew.beers.first.ratings.create score:11
+  Beer Load (0.5ms)  SELECT  "beers".* FROM "beers" WHERE "beers"."brewery_id" = ?  ORDER BY "beers"."id" ASC LIMIT 1  [["brewery_id", 5]]
+   (0.0ms)  begin transaction
+  SQL (0.3ms)  INSERT INTO "ratings" ("score", "beer_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)  [["score", 11], ["beer_id", 14], ["created_at", "2016-01-26 13:03:54.846414"], ["updated_at", "2016-01-26 13:03:54.846414"]]
+   (120.5ms)  commit transaction
+=> #<Rating id: 4, score: 11, beer_id: 14, created_at: "2016-01-26 13:03:54", updated_at: "2016-01-26 13:03:54">
+irb(main):005:0> brew.beers[1].ratings.create score:12
+  Beer Load (0.2ms)  SELECT "beers".* FROM "beers" WHERE "beers"."brewery_id" = ?  [["brewery_id", 5]]
+   (0.1ms)  begin transaction
+  SQL (0.2ms)  INSERT INTO "ratings" ("score", "beer_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)  [["score", 12], ["beer_id", 15], ["created_at", "2016-01-26 13:04:23.266992"], ["updated_at", "2016-01-26 13:04:23.266992"]]
+   (54.8ms)  commit transaction
+=> #<Rating id: 5, score: 12, beer_id: 15, created_at: "2016-01-26 13:04:23", updated_at: "2016-01-26 13:04:23">
+irb(main):006:0> brew.beers.first
+=> #<Beer id: 14, name: "Punk IPA", style: "IPA", brewery_id: 5, created_at: "2016-01-26 13:02:53", updated_at: "2016-01-26 13:02:53">
+irb(main):007:0> brew.beers.second
+=> #<Beer id: 15, name: "Nanny State", style: "lowalcohol", brewery_id: 5, created_at: "2016-01-26 13:03:37", updated_at: "2016-01-26 13:03:37">
+irb(main):008:0> Ratings.all
+NameError: uninitialized constant Ratings
+	from (irb):8
+	from /home/joqtyyppi/.rbenv/versions/2.3.0/lib/ruby/gems/2.3.0/gems/railties-4.2.5/lib/rails/commands/console.rb:110:in `start'
+	from /home/joqtyyppi/.rbenv/versions/2.3.0/lib/ruby/gems/2.3.0/gems/railties-4.2.5/lib/rails/commands/console.rb:9:in `start'
+	from /home/joqtyyppi/.rbenv/versions/2.3.0/lib/ruby/gems/2.3.0/gems/railties-4.2.5/lib/rails/commands/commands_tasks.rb:68:in `console'
+	from /home/joqtyyppi/.rbenv/versions/2.3.0/lib/ruby/gems/2.3.0/gems/railties-4.2.5/lib/rails/commands/commands_tasks.rb:39:in `run_command!'
+	from /home/joqtyyppi/.rbenv/versions/2.3.0/lib/ruby/gems/2.3.0/gems/railties-4.2.5/lib/rails/commands.rb:17:in `<top (required)>'
+	from /home/joqtyyppi/RubymineProjects/ratebeer/bin/rails:9:in `<top (required)>'
+	from /home/joqtyyppi/.rbenv/versions/2.3.0/lib/ruby/2.3.0/rubygems/core_ext/kernel_require.rb:55:in `require'
+	from /home/joqtyyppi/.rbenv/versions/2.3.0/lib/ruby/2.3.0/rubygems/core_ext/kernel_require.rb:55:in `require'
+	from -e:1:in `<main>'
+irb(main):009:0> Rating.all
+  Rating Load (0.3ms)  SELECT "ratings".* FROM "ratings"
+=> #<ActiveRecord::Relation [#<Rating id: 1, score: 10, beer_id: 1, created_at: "2016-01-26 12:36:20", updated_at: "2016-01-26 12:36:20">, #<Rating id: 2, score: 21, beer_id: 1, created_at: "2016-01-26 12:36:32", updated_at: "2016-01-26 12:36:32">, #<Rating id: 3, score: 17, beer_id: 1, created_at: "2016-01-26 12:36:39", updated_at: "2016-01-26 12:36:39">, #<Rating id: 4, score: 11, beer_id: 14, created_at: "2016-01-26 13:03:54", updated_at: "2016-01-26 13:03:54">, #<Rating id: 5, score: 12, beer_id: 15, created_at: "2016-01-26 13:04:23", updated_at: "2016-01-26 13:04:23">]>
+irb(main):010:0> 
+
