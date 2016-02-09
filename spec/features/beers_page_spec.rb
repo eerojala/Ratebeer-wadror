@@ -1,10 +1,14 @@
 require 'rails_helper'
 
+include Helpers
+
 describe "Beers page" do
   describe "creating a beer" do
     before :each do
       FactoryGirl.create(:brewery)
       FactoryGirl.create(:brewery, name: 'brewery', year: 2001)
+      FactoryGirl.create(:user)
+      sign_in(username:"Pekka", password:"Foobar1")
       visit new_beer_path
     end
 

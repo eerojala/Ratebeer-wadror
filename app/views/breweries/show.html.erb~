@@ -12,16 +12,16 @@
 </p>
 
 <p>
- <% if @brewery.ratings.empty? %>
-  No beers from this brewery have been rated!
- <% else %>
-  Has <%= pluralize(@brewery.ratings.length, 'rating') %>, average: <%= @brewery.average_rating%>
+ <% @brewery.beers.each do |beer| %>
+   <%= link_to beer.name, beer %>,
  <% end %>
 </p>
 
 <p>
- <% @brewery.beers.each do |beer| %>
-   <%= link_to beer.name, beer %>,
+ <% if @brewery.ratings.empty? %>
+  No beers from this brewery have been rated!
+ <% else %>
+  Has <%= pluralize(@brewery.ratings.length, 'rating') %>, average: <%= @brewery.average_rating%>
  <% end %>
 </p>
 
