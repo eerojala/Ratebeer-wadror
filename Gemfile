@@ -33,6 +33,8 @@ gem 'bcrypt', '~> 3.1.7'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  gem 'rspec-rails', '~> 3.0'
+  gem 'rspec-its'
 end
 
 group :development do
@@ -56,6 +58,13 @@ group :development, :test do
    gem "better_errors"
 
    #...
+end
+
+group :test do
+  gem 'factory_girl_rails'
+  gem 'capybara'
+  gem 'launchy'
+  gem 'simplecov', require: false
 end
 
 ruby '2.3.0'

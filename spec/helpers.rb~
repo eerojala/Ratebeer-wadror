@@ -1,0 +1,15 @@
+module Helpers
+
+  def sign_in(credentials)
+    visit signin_path
+    fill_in('username', with:credentials[:username])
+    fill_in('password', with:credentials[:password])
+    click_button('Log in')
+  end
+
+  def create_ratings(parameters)
+    user = parameters[:user]
+    user.ratings << FactoryGirl.create(:rating, beer:parameters[beer1], user:user);
+    user.ratings << FactoryGirl.create(:rating2, beer:parameters[beer2], user:user);
+  end
+end
