@@ -8,7 +8,7 @@ class Place
 
   def map_url
     url = blogmap
-    if Rails.env == development
+    if Rails.env == "development"
       url
     else
       url[4] = "s:"

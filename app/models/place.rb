@@ -5,13 +5,4 @@ class Place
   def self.rendered_fields
     [:id, :name, :status, :street, :city, :zip, :country, :overall]
   end
-
-  def map_url
-    url = blogmap
-    if Rails.env == "development"
-      url
-    else
-      url[4] = "s:"
-    end
-  end
 end
