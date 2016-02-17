@@ -18,40 +18,28 @@ class User < ActiveRecord::Base
 
  def favorite_style
    return nil if ratings.empty?
-   styles = map_styles
-   most_common = most_common_style(styles)
-   return most_common 
+
+   rated = ratings.map{ |r| r.beer.style }.uniq
+   rated.sort_by { |style| -rating_of_style(style) }.first
  end
 
- def most_common_style(styles)
-    biggest_count = 0
-    most_common = ""
+ def favorite_brewery
+   return nil if ratings.empty?
 
-    styles.each {|key, value| 
-      if value > biggest_count
-        biggest_count = value
-        most_common = key
-      end
-    }
-
-    return most_common
+   rated = ratings.map{ |r| r.beer.brewery }.uniq
+   rated.sort_by { |brewery -rating_of_brewery(brewery) }.first
  end
 
  private
-   def map_styles
-     styles = Hash.new
-     ratings.each do |r|
-       count = styles[r.beer.style]
-       if count.nil? 
-         styles[r.beer.style] = 1
-       else
-         styles[r.beer.style] = count + 1
-       end
 
-     return styles
-   end
+ def rating_of_style(style)
+   ratings_of = ratings.select{ |r| r.beer.style==style }
+   ratings_of.map(&:score).inject(&:+) / ratings_of.count.to_f
+ end
 
-   
+ def rating_of_brewery(brewery)
+   ratings_of = ratings.select{ |r| r.beer.brewery==brewery }
+   ratings_of.map(&:score).inject(&:+) / ratings_of.count.to_f
  end
 
 end

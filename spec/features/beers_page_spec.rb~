@@ -7,9 +7,10 @@ describe "Beers page" do
     before :each do
       FactoryGirl.create(:brewery)
       FactoryGirl.create(:brewery, name: 'brewery', year: 2001)
+      FactoryGirl.create(:style)
+      FactoryGirl.create(:style, name: 'IPA', description: "Another test")
       FactoryGirl.create(:user)
       sign_in(username:"Pekka", password:"Foobar1")
-      save_and_open_page
       visit new_beer_path
     end
 

@@ -1,4 +1,20 @@
 FactoryGirl.define do
+  factory :brewery do
+    name:"anonymous"
+    year 1900
+  end
+
+  factory :style do
+    name "Lager"
+    description "test"
+  end
+  
+  factory :beer do
+    name "anonymous"
+    brewery
+    style "Lager"
+  end
+
   factory :user do
     username "Pekka"
     password "Foobar1"

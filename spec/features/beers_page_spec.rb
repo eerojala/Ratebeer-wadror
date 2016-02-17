@@ -7,6 +7,8 @@ describe "Beers page" do
     before :each do
       FactoryGirl.create(:brewery)
       FactoryGirl.create(:brewery, name: 'brewery', year: 2001)
+      FactoryGirl.create(:style)
+      FactoryGirl.create(:style, name: 'IPA', description: "Another test")
       FactoryGirl.create(:user)
       sign_in(username:"Pekka", password:"Foobar1")
       visit new_beer_path
@@ -14,7 +16,7 @@ describe "Beers page" do
 
     it "is successful with valid parameters" do
       fill_in('beer_name', with:'Kalia')
-      select('Lager', from:'beer_style')
+      select('IPA', from:'beer[style_id]')
       select('brewery', from:'beer[brewery_id]')
 
       expect{
@@ -26,7 +28,7 @@ describe "Beers page" do
     end
 
    it "is unsuccessful with an invalid name" do
-      select('Lager', from:'beer_style')
+      select('Lager', from:'beer[style_id]')
       select('brewery', from:'beer[brewery_id]')
       click_button('Create Beer')
 
