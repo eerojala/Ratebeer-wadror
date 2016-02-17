@@ -11,7 +11,7 @@ class Place
     if Rails.env == "development"
       url
     else
-      url.insert(4, 's:')
+      url.insert(4, 's')
     end
   end
 end
