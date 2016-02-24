@@ -6,9 +6,11 @@ class BeerClub < ActiveRecord::Base
   end	
 
   def member_of_this_club(user)
-    memberships.map do |membership|
-      if (user.id == membership.user_id)
-        return true
+    if user
+      memberships.map do |membership|
+        if (user.id == membership.user_id)
+          return true
+        end
       end
     end
     return false

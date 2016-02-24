@@ -7,7 +7,6 @@ class BeerClub < ActiveRecord::Base
 
   def member_of_this_club(user)
     memberships.map do |membership|
-      puts membership.user_id
       if (user.id == membership.user_id)
         return true
       end

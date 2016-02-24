@@ -22,7 +22,7 @@
     <% if @user.new_record? %>
       <%= f.label :password %><br />
     <% else %>
-      <%= f.label :new password %><br />
+      <%= f.label :new_password %><br />
     <% end %>
     <%= f.password_field :password %>
   </div>

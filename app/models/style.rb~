@@ -2,6 +2,11 @@ class Style < ActiveRecord::Base
   has_many :beers, dependent: :destroy
 
   def to_s
-    {name}
+    name
+  end
+
+  def self.top(n)
+    sorted_by_rating_in_desc_order = Style.all.sort_by{ |s| -(s.average_rating||0) }
+    return sorted_by_rating_in_desc_order[0, n]
   end
 end

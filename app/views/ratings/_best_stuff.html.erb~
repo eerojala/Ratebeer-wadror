@@ -1,0 +1,17 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th></th>
+      <th>average</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    <% best.each do |b| %>
+      <tr>
+        <td><%= link_to b.name, b %></td>
+        <td><%= b.average_rating %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

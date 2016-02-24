@@ -1,14 +1,21 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
+<h2>
   <%= @style.name %>
-</p>
+</h2>
 
-<p>
-  <strong>Description:</strong>
+<quote>
   <%= @style.description %>
-</p>
+</quote>
 
-<%= link_to 'Edit', edit_style_path(@style) %> |
-<%= link_to 'Back', styles_path %>
+
+<h2>Beers</h2>
+<ul>
+ <% @style.beers.each do |beer| %>
+   <li> 
+     <%= beer %>  
+   </li>
+ <% end %>
+</ul>
+
+<%= edit_and_destroy_buttons(@style) %>
