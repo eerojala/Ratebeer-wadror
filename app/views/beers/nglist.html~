@@ -1,0 +1,37 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular.min.js"></script>
+<script>
+  var myApp = angular.module('myApp', []);
+
+
+  function BeersController($scope, $http) {
+        $http.get('beers.json').success( function(data, status, headers, config) {
+            $scope.beers = data;
+        });
+
+        $scope.order = 'name';
+
+        $scope.sort_by = function (order){
+            $scope.order = order;
+            console.log(order);
+        }
+   }
+</script>
+
+<h2>Beers</h2>
+
+<div ng-app="myApp" ng-controller="BeersController">
+
+  <table class="table table-hover">
+    <thead>
+    <th> <a>name</a> </th>
+    <th> <a>style</a> </th>
+    <th> <a>brewery</a> </th>
+    </thead>
+    <tr ng-repeat="beer in beers">
+      <td>{{beer.name}}</td>
+      <td>{{beer.style.name}}</td>
+      <td>{{beer.brewery.name}}</td>
+    </tr>
+  </table>
+
+</div>

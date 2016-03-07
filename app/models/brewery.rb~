@@ -7,7 +7,7 @@ class Brewery < ActiveRecord::Base
   scope :active, -> { where active:true }
   scope :retired, -> { where active:[nil,false] }
 
-  has_many :beers, dependent: :destroy
+  has_many :beers, touch: true, dependent: :destroy
   has_many :ratings, through: :beers
 
   def print_report
@@ -23,5 +23,10 @@ class Brewery < ActiveRecord::Base
   
   def to_s
     name
+  end
+
+  def self.top(n)
+    sorted_by_rating_in_desc_order = Brewery.all.sort_by{ |b| -(b.average_rating||0) }
+    return sorted_by_rating_in_desc_order[0, n]
   end
 end

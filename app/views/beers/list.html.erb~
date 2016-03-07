@@ -1,0 +1,4 @@
+<h2>Beers</h2>
+
+<a href="#" id="reverse">reverse!</a>
+<div id="beers"></div>

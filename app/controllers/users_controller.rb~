@@ -68,7 +68,7 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     user.update_attribute :denied, (not user.denied)
 
-    new_status = user.denied? ? "unfrozen" : "frozen"
+    new_status = user.denied? ? "frozen" : "unfrozen"
 
     redirect_to :back, notice:"user status changed to #{new_status}"
   end

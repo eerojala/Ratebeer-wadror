@@ -1,13 +1,16 @@
 class BreweriesController < ApplicationController
   before_action :set_brewery, only: [:show, :edit, :update, :destroy]
-  before_action :ensure_that_signed_in, except: [:index, :show]
+  before_action :ensure_that_signed_in, except: [:index, :show, :list]
   before_action :admin_check, only: [:destroy]
 
   # GET /breweries
   # GET /breweries.json
   def index
-    @active_breweries = Brewery.active
-    @retired_breweries = Brewery.retired
+   @breweries = Brewery.all
+   order = params[:order] || 'name'
+   @active_breweries = order_breweries(Brewery.active, order)
+   @retired_breweries = order_breweries(Brewery.retired, order)
+   session[:prev_order] = order
   end
 
   # GET /breweries/1
@@ -73,6 +76,9 @@ class BreweriesController < ApplicationController
     redirect_to :back, notice:"brewery activity status changed to #{new_status}"
   end
 
+  def list
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_brewery
@@ -83,4 +89,23 @@ class BreweriesController < ApplicationController
     def brewery_params
       params.require(:brewery).permit(:name, :year, :active)
     end
+
+    def order_breweries(breweries, order)
+      prev_order = session[:prev_order]
+      case 
+        when order == 'name' && prev_order == 'name'
+          breweries = breweries.sort_by{ |b| b.name }.reverse
+        when order == 'year' && prev_order == 'year'
+          breweries = breweries.sort_by{ |b| b.year }.reverse
+        when order == 'name'
+          breweries = breweries.sort_by{ |b| b.name } 
+        when order == 'year' 
+          breweries = breweries.sort_by{ |b| b.year }
+      end
+      breweries
+    end
+   
+  def set_prev_order(prev_order)
+    session[:prev_order] = prev_order
+  end
 end
